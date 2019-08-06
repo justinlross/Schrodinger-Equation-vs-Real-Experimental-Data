@@ -26,39 +26,48 @@ df = np.array([])
 counter = 0
 #df = pd.DataFrame()
 #df = pd.DataFrame(index=range(512),columns=range(512))
-list_of_files = glob.glob('C:\\Users\Justin\Desktop\Datasets\Heralded Diffraction SM\*.asc') # create the list of file
+#list_of_files = glob.glob('C:\\Users\Justin\Desktop\Datasets\Heralded Diffraction SM\*.asc') # create the list of file
+list_of_files = glob.glob('C:\\Users\Justin\Desktop\Datasets\S Test Files\*.asc') # create the list of file
 
 #with open(r"C:\\Users\Justin\Desktop\Datasets\Heralded Diffraction SM\0040.asc",encoding="ascii", errors="surrogateescape") as dataInput:
 
-
-
-for item in list_of_files:
-    filePath = item
+"""
+testCount = 0
+while testCount < 50:
+    testCount += 1
+"""    
+    
+for filePath in list_of_files:
     with open(filePath,encoding="ascii") as dataInput:
         for line in dataInput:
             for item in line:
                 if item.isnumeric():
                     lines.append(int(item))
-#        df.append(line)
-#        for blah in line:
-
-
+                    
     df = np.append(df, [lines]) # perhaps use vertical stack here!!!
     grid = np.resize(df,(512, 512)) # 262144 produces 512 by 512
     grid = np.swapaxes(grid,0,1) # check to make sure this is the correct axis swap, probably a better way to do this.
 
     dfend = pd.DataFrame(grid)
 
-# styling
-# Style the plot
+    # styling
+    # Style the plot
     fig, ax = plt.subplots()
     heatmap = ax.pcolor(dfend, cmap=plt.cm.viridis, vmin=0, vmax=10)
-#Viridis is chosen as it is a great colour map that is dark to light.
+    #plt.box(on=None)
+    #plt.axis('off')
+
+    #Viridis is chosen as it is a great colour map that is dark to light.
     fig.set_size_inches(14, 14)
-    saveName = (str(counter) + '.png')
-    print(saveName)
+    saveName ='images/' + (str(counter) + '.png')
+    #plt.savefig(saveName,bbox_inches='tight',pad_inches = -1)
     plt.savefig(saveName)
-    plt.close(saveName)
+    plt.close('all')
+    
+    df = np.empty([])
+    dfend = np.empty([])
+    grid = np.empty([])
+    lines.clear()
     counter += 1
 
 # Teh Code

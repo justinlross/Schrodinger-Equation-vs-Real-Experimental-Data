@@ -29,7 +29,7 @@ df = np.array([])
 
 #with open(r"C:\\Users\Justin\Desktop\Datasets\Heralded Diffraction SM\0040.asc",encoding="ascii", errors="surrogateescape") as dataInput:
 
-filePath = r"C:\\Users\Justin\Desktop\Datasets\Heralded Diffraction SM\3050.asc"
+filePath = r"C:\\Users\Justin\Desktop\Datasets\Heralded Diffraction SM\3956.asc"
 
 
 with open(filePath,encoding="ascii") as dataInput:
@@ -55,13 +55,18 @@ heatmap = ax.pcolor(dfend, cmap=plt.cm.viridis, vmin=0, vmax=10)
 fig.set_size_inches(14, 14)
 
 
-
-ax.set_xticks(np.arange(0, 512, step=50))
-ax.set_yticks(range(0,512,100))
+#ax.set_xticks(np.arange(0, 512, step=50))
+#ax.set_yticks(range(0,512,100))
+ax.get_xaxis().set_ticks([])
+ax.get_yaxis().set_ticks([])
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.spines['left'].set_visible(False)
 
 plt.box(on=None)
 plt.axis('off')
-plt.savefig("test.png",bbox_inches='tight')
+plt.savefig("test.png",bbox_inches='tight',aspect='auto', pad_inches = -0)
 
 
 # Teh Code

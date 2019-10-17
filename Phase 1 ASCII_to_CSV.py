@@ -42,7 +42,10 @@ for filePath in list_of_files:
             for item in line:
                 item = item.strip()
                 if item.isnumeric():
-                    lines.append(int(item))
+                    if (item == 2.525e-321): # This is simply to catch a strange exception I do not understand.
+                        lines.append(int(0)) # In the case of the exception, input 0 rather than 2.525e-321
+                    else:
+                        lines.append(int(item))
 
     df = np.append(df, [lines]) # perhaps use vertical stack here!!!
     grid = np.resize(df,(512, 512)) # 262144 produces 512 by 512

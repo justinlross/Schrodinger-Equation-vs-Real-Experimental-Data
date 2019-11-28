@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 """
-Created on Tue Nov 26 14:51:52 2019
+This file contains all the code for processing the experimental data
+including cleaning it and converting it into workable formats.
 
 Author: Justin L Ross -
 License: BSD
 
-This section contains all the code for processing the experimental data
-including cleaning it and converting it into workable formats.
+
 """
 
 ######################################################################
@@ -35,12 +34,11 @@ pngFolder = 'C:\\Users\Justin\Desktop\Datasets\Schrodinger Equation vs Real Expe
 
 ######################################################################
 
+
+
 def convert_ascii_to_png(asciiFolder):
     
     return
-
-
-asciiFolder = 'C:\\Users\Justin\Desktop\Datasets\Heralded Diffraction SM\*.asc'
 
 
 def convert_ascii_to_csv(asciiFolder):
@@ -59,23 +57,23 @@ def convert_ascii_to_csv(asciiFolder):
                         item = int(item)
                         lines.append(item)
 
-    collisionMatrix = np.append(collisionMatrix, [lines]) # perhaps use vertical stack here!!!
-    grid = np.resize(collisionMatrix,(512, 512)) # 262144 produces 512 by 512
-    grid = np.swapaxes(grid,0,1) # check to make sure this is the correct axis swap, probably a better way to do this.
+        collisionMatrix = np.append(collisionMatrix, [lines]) # perhaps use vertical stack here!!!
+        grid = np.resize(collisionMatrix,(512, 512)) # 262144 produces 512 by 512
+        grid = np.swapaxes(grid,0,1) # check to make sure this is the correct axis swap, probably a better way to do this.
 
-    dfend = pd.DataFrame(grid)
+        dfend = pd.DataFrame(grid)
         
     
-    #This is for saving the file.
-    saveName ='csv/' + (str("%04d" % counter) + '.csv')
-    dfend.to_csv(saveName)
+        #This is for saving the file.
+        saveName ='csva/' + (str("%04d" % counter) + '.csv')
+        dfend.to_csv(saveName)
 
-    #This is for clearning the stored data.
-    collisionMatrix = np.empty([]) # This is the line causing the issue, unclear why.
-    dfend = np.empty([])
-    grid = np.empty([])
-    lines.clear()
-    counter += 1
+        #This is for clearning the stored data.
+        collisionMatrix = np.empty([]) # This is the line causing the issue, unclear why.
+        dfend = np.empty([])
+        grid = np.empty([])
+        lines.clear()
+        counter += 1
     
     return
 
@@ -101,5 +99,5 @@ def create_video_from_png_files(pngFolder):
 
 
 ######################################################################
-    
 
+convert_ascii_to_csv(asciiFolder)

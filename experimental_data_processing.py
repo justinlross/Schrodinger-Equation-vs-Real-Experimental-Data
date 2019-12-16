@@ -196,7 +196,47 @@ def convert_csv_to_png():
 
 def ascii_to_png_display():
     
-    
+    lines = []
+    rowVar = pd.Series()
+    df = np.array([])
+
+    filePath = r"C:\\Users\Justin\Desktop\Datasets\Heralded Diffraction SM\3999.asc"
+
+
+    with open(filePath,encoding="ascii") as dataInput:
+        for line in dataInput:
+            line = line.split()
+            for item in line:
+                item = item.strip()
+                if item.isnumeric():
+                    lines.append(int(item))
+
+    df = np.append(df, [lines]) # perhaps use vertical stack here!!!
+    grid = np.resize(df,(512, 512)) # 262144 produces 512 by 512
+    grid = np.swapaxes(grid,0,1) # check to make sure this is the correct axis swap, probably a better way to do this.
+
+    dfend = pd.DataFrame(grid)
+
+    # styling
+    # Style the plot
+    fig, ax = plt.subplots()
+    heatmap = ax.pcolor(dfend, cmap=plt.cm.viridis, vmin=0, vmax=10)
+    #Viridis is chosen as it is a great colour map that is dark to light.
+    fig.set_size_inches(14, 14)
+
+
+    #ax.set_xticks(np.arange(0, 512, step=50))
+    #ax.set_yticks(range(0,512,100))
+    ax.get_xaxis().set_ticks([])
+    ax.get_yaxis().set_ticks([])
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+
+    plt.box(on=None)
+    plt.axis('off')
+    plt.savefig("test.png",bbox_inches='tight',aspect='auto', pad_inches = -0)
     
     return
 
@@ -219,9 +259,14 @@ def create_video_from_png_files(pngFolder,videoFileName):
 
 
 ######################################################################
+"""
+Uncomment whatever function you need to run.
+"""
+
 
 #convert_ascii_to_png(asciiFolder)
 #convert_ascii_to_csv(asciiFolder)
 #convert_csv_to_png()
-create_video_from_png_files(pngFolder,videoFileName)
-
+#create_video_from_png_files(pngFolder,videoFileName)
+#ascii_to_png_display()
+#ascii_to_png_display()

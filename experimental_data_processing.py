@@ -269,4 +269,3 @@ Uncomment whatever function you need to run.
 #convert_csv_to_png()
 #create_video_from_png_files(pngFolder,videoFileName)
 #ascii_to_png_display()
-#ascii_to_png_display()

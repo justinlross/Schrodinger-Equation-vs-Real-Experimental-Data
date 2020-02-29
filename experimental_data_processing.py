@@ -28,8 +28,8 @@ import cv2 # For the video file
 
 
 asciiFolder = 'C:\\Users\Justin\Desktop\Datasets\Ghost Imaging SM\*.asc'
-pngFolder = 'C:\\Users\Justin\Desktop\Datasets\Ghost Imaging SM Contents\images\*.png'
-csvFolder = 'C:\\Users\Justin\Desktop\Datasets\Schrodinger Equation vs Real Experimental Data\csvheraldedSM\*.csv'
+pngFolder = 'C:\\Users\Justin\Desktop\Datasets\Schrodinger Equation vs Real Experimental Data\images\*.png'
+csvFolder = 'C:\\Users\Justin\Desktop\Datasets\Schrodinger Equation vs Real Experimental Data\csvghostSM\*.csv'
 videoFileName = 'videoaaazzzz.avi'
 
 
@@ -120,7 +120,8 @@ def convert_ascii_to_csv(asciiFolder):
         
     
         #This is for saving the file.
-        saveName ='csvghost/' + (str("%04d" % counter) + '.csv')
+        #saveName ='csvghost/' + (str("%04d" % counter) + '.csv')
+        saveName ='' + (str("%04d" % counter) + '.csv')
         dfend.to_csv(saveName)
 
         #This is for clearning the stored data.
@@ -237,12 +238,14 @@ def convert_csv_to_png():
         #plt.savefig(saveName)
         plt.savefig(saveName,bbox_inches='tight',aspect='auto', pad_inches = -0)
         plt.close('all')
-
+        
+        """
         #This is for clearning the stored data.
         collisionMatrix = np.array([]) # This is the line causing the issue, unclear why.
         dfend = np.array([])
         grid = np.array([])
         lines.clear()
+        """
         counter += 1
     return
 
@@ -294,6 +297,49 @@ def ascii_to_png_display():
     return
 
 
+def csv_to_png_display():
+    
+    lines = []
+    rowVar = pd.Series()
+    df = np.array([])
+
+    filePath = r"C:\\Users\Justin\Desktop\Datasets\Schrodinger Equation vs Real Experimental Data\csvghostSM\4069.csv"
+
+    dfend = pd.read_csv(filePath, header=None) # BLAH BLAH
+    
+    print(dfend)
+
+    """
+    Section for styling the plot.
+    """
+    # Style the plot
+    fig, ax = plt.subplots()
+    heatmap = ax.pcolor(dfend, cmap=plt.cm.viridis, vmin=0, vmax=78)
+    
+    # The following is for getting rid of the white border.
+    ax.get_xaxis().set_ticks([])
+    ax.get_yaxis().set_ticks([])
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+
+    plt.box(on=None)
+    plt.axis('off')
+
+    #Viridis is chosen as it is a great colour map that is dark to light.
+    fig.set_size_inches(14, 14)
+    
+    
+    #This is for saving the file.
+    saveName ='imagescsvghost' + (str("%04d" % counter) + '.png')
+    #plt.savefig(saveName,bbox_inches='tight',pad_inches = -1)
+    #plt.savefig(saveName)
+    plt.savefig(saveName,bbox_inches='tight',aspect='auto', pad_inches = -0)
+    plt.close('all')
+    
+    return
+
 def create_video_from_png_files(pngFolder,videoFileName):
     list_of_files = glob.glob(pngFolder) # create the list of file
     
@@ -319,6 +365,7 @@ Uncomment whatever function you need to run.
 
 #convert_ascii_to_png(asciiFolder)
 #convert_ascii_to_csv(asciiFolder)
-convert_csv_to_png()
+#convert_csv_to_png()
 #create_video_from_png_files(pngFolder,videoFileName)
 #ascii_to_png_display()
+#csv_to_png_display()
